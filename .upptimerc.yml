@@ -1,0 +1,108 @@
+# Change these first
+owner: ARIA-inc # Your GitHub organization or username, where this repository lives
+repo: medrt_upptime # The name of this repository
+
+sites:
+  # ---- 本番（VPS: 103.142.27.142 / docker-compose） ----
+  - name: medrt_web_prd
+    url: https://vn.job.medrthub.com/
+  - name: medrt_api_prd
+    url: https://api.vn.job.medrthub.com/health
+    expectedStatusCodes:
+      - 200
+  - name: medrt_management_prd
+    url: https://admin.vn.job.medrthub.com/
+  # 医療機関管理サイト（本番ドメイン確定後にコメント解除）
+  # - name: medrt_institution_management_prd
+  #   url: https://<institution-domain>/
+
+  # ---- ステージング（AWS ECS/RDS）: 監視する場合はコメント解除 ----
+  # - name: medrt_web_stg
+  #   url: https://stg.vn.job.medrthub.com/
+  # - name: medrt_api_stg
+  #   url: https://api.stg.vn.job.medrthub.com/health
+  #   expectedStatusCodes:
+  #     - 200
+  # - name: medrt_management_stg
+  #   url: https://admin.stg.vn.job.medrthub.com/
+
+status-website:
+  # Add your custom domain name, or remove the `cname` line if you don't have a domain
+  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
+  # cname: status.medrthub.com
+  baseUrl: /medrt_upptime
+  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
+  name: MEDRT Status
+  introTitle: "**MEDRT** の本番環境（VPS）の死活監視ステータスページです。"
+  introMessage: このページは GitHub Actions による監視結果をリアルタイムに表示します。障害は GitHub Issue として自動起票され、Slack へ通知されます。
+  navbar:
+    - title: Status
+      href: /
+    - title: GitHub
+      href: https://github.com/$OWNER/$REPO
+
+# Upptime also supports notifications, assigning issues, and more
+# See https://upptime.js.org/docs/configuration
+
+i18n:
+  activeIncidents: "進行中のインシデント"
+  allSystemsOperational: "すべてのシステムは正常に稼働しています"
+  incidentReport: "インシデント #$NUMBER レポート →"
+  activeIncidentSummary: "$DATE に開始、投稿数 $POSTS 件"
+  incidentTitle: "インシデント $NUMBER の詳細"
+  incidentDetails: "インシデントの詳細"
+  incidentFixed: "解決済み"
+  incidentOngoing: "対応中"
+  incidentOpenedAt: "開始日時"
+  incidentClosedAt: "終了日時"
+  incidentViewOnGitHub: "GitHubで表示・購読"
+  incidentCommentSummary: "$DATE に $AUTHOR が投稿"
+  incidentBack: "← すべてのインシデントに戻る"
+  pastIncidents: "過去のインシデント"
+  pastIncidentsResolved: "$MINUTES 分で解決、投稿数 $POSTS 件"
+  liveStatus: "リアルタイムステータス"
+  overallUptime: "全体の稼働率: $UPTIME"
+  overallUptimeTitle: "全体の稼働率"
+  averageResponseTime: "平均応答時間: $TIMEms"
+  averageResponseTimeTitle: "平均応答時間"
+  sevelDayResponseTime: "7日間の応答時間"
+  responseTimeMs: "応答時間（ms）"
+  up: "稼働中"
+  down: "停止中"
+  degraded: "一部機能低下"
+  ms: "ms"
+  loading: "読み込み中"
+  navGitHub: "GitHub"
+  footer: "このページは [オープンソース]($REPO) で、[Upptime](https://upptime.js.org) によって提供されています"
+  rateLimitExceededTitle: "レート制限を超過しました"
+  rateLimitExceededIntro: "1時間あたりのリクエスト上限を超えました。再度このサイトにアクセスするにはしばらくお待ちください。もしくは、GitHubのPersonal Access Tokenを追加することで引き続きご利用いただけます。"
+  rateLimitExceededWhatDoesErrorMean: "このエラーは何を意味しますか？"
+  rateLimitExceededErrorMeaning: "このサイトは、ウェブサイトのリアルタイムなステータス情報を取得するためにGitHub APIを使用しています。デフォルトでは、GitHubは各IPアドレスごとに1時間あたり60リクエストまで許可していますが、その上限に達しました。"
+  rateLimitExceededErrorHowCanFix: "どのように解決できますか？"
+  rateLimitExceededErrorFix: "1時間待つとIPアドレスの上限はリセットされます。もしくは、GitHubのPersonal Access Tokenを追加すると、1時間あたり5,000リクエストまで利用可能になります。"
+  rateLimitExceededGeneratePAT: "Personal Access Tokenの生成方法を見る"
+  rateLimitExceededHasSet: "Personal Access Tokenが設定されています。"
+  rateLimitExceededRemoveToken: "トークンを削除"
+  rateLimitExceededGitHubPAT: "GitHub Personal Access Token"
+  rateLimitExceededCopyPastePAT: "トークンをコピー＆ペーストしてください"
+  rateLimitExceededSaveToken: "トークンを保存"
+  errorTitle: "エラーが発生しました"
+  errorIntro: "最新のステータス情報の取得中にエラーが発生しました。"
+  errorText: "しばらくしてから再度お試しください。"
+  errorHome: "ホームページへ戻る"
+  pastScheduledMaintenance: "過去の予定メンテナンス"
+  scheduledMaintenance: "予定メンテナンス"
+  scheduledMaintenanceSummaryStarted: "$DATE に開始、所要時間 $DURATION 分"
+  scheduledMaintenanceSummaryStarts: "$DATE に開始予定、所要時間 $DURATION 分"
+  startedAt: "開始日時"
+  startsAt: "開始予定日時"
+  duration: "所要時間"
+  durationMin: "$DURATION 分"
+  incidentCompleted: "完了"
+  incidentScheduled: "予定"
+  duration24H: "24時間"
+  duration7D: "7日間"
+  duration30D: "30日間"
+  duration1Y: "1年間"
+  durationAll: "すべて"
+  locale: "ja-JP"
