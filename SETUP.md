@@ -27,7 +27,7 @@
 ## 2. リポジトリ作成と push
 
 ```bash
-cd /Users/long/Projects/ARIA/medrt_upptime
+cd medrt_upptime
 
 # GitHub 上にリポジトリを作成（Public 推奨。理由は「4. GitHub Pages」を参照）
 gh repo create ARIA-inc/medrt_upptime --public --source=. --remote=origin --push
