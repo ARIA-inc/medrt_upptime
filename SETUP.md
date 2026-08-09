@@ -73,11 +73,23 @@ Upptime は監視結果を `history/` `api/` `graphs/` にコミットするた�
    - Branch: **gh-pages** / **/ (root)**
 3. 数分後に https://ARIA-inc.github.io/medrt_upptime で公開されます
 
-> **Public リポジトリを推奨する理由**: GitHub Pages は Free / Team プランでは Private リポジトリから公開できません
-> （Enterprise Cloud のみ対応）。Private にする場合、ステータスページは使えず、
-> 監視・Issue 起票・Slack 通知のみの利用となります（この 3 つは Private でも動作します）。
->
-> このリポジトリには URL 以外の機密情報は含まれません。参考の `ema_sound_upptime` も Public です。
+### Public / Private の判断
+
+| | Public | Private |
+| --- | --- | --- |
+| 監視・Issue 起票・Slack 通知 | ✅ | ✅ |
+| ステータスページ（GitHub Pages） | ✅ | ❌ Enterprise Cloud のみ |
+| Actions 実行時間 | 無料・無制限 | 無料枠を消費（Free 2,000分/月・Team 3,000分/月） |
+
+Private でも監視とアラートは問題なく動作します。Public が必要なのは **ステータスページを公開する場合のみ** です。
+
+Actions の消費量は、`ema_sound_upptime` の実績値（1回あたり約12〜20秒、
+GitHub の課金は1分未満切り上げ）から月あたり約1,200分と見積もられます。
+無料枠には収まりますが余裕は大きくないため、Private 運用時は使用量を確認してください。
+
+このリポジトリには機密情報は含まれません（Webhook URL や PAT は GitHub Secrets 側に保存され、
+コードには入りません）。監視対象の URL は既に公開されているものです。
+参考の `ema_sound_upptime` も Public です。
 
 独自ドメイン（例 `status.medrthub.com`）を使う場合は、`.upptimerc.yml` の
 `status-website.cname` を設定し、`baseUrl` の行を削除してください。
@@ -179,7 +191,7 @@ SMTP / SendGrid / SES などが利用できます。SMTP の例:
 
 | 項目 | 内容 |
 | --- | --- |
-| 監視間隔 | 5分（`uptime.yml` の cron `*/5 * * * *`。GitHub 側の混雑で数分ずれる場合あり） |
+| 監視間隔 | 設定値は5分（`uptime.yml` の cron `*/5 * * * *`）。ただし GitHub の schedule は保証されず、実績では間引かれます（`ema_sound_upptime` は約34回/日 = 平均40〜45分間隔）。検知の遅れを許容できない場合は外部の cron から `workflow_dispatch` を叩く運用を検討してください |
 | ダウン判定 | HTTP ステータスが期待値以外、またはタイムアウト |
 | 障害記録 | GitHub Issue として自動起票 → 復旧時に自動クローズ |
 | 通知先 | Slack（Incoming Webhook）＋ Issue の Watch 通知 |
