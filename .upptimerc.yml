@@ -14,6 +14,10 @@ sites:
     url: https://admin.vn.job.medrthub.com/
   - name: medrt_institution_management_prd
     url: https://organization.vn.job.medrthub.com/
+  - name: test_down
+    url: https://vn.job.medrthub.com/__upptime_test_404__
+    expectedStatusCodes:
+      - 200
 
   # ---- ステージング（AWS ECS/RDS）: 監視する場合はコメント解除 ----
   # - name: medrt_web_stg
