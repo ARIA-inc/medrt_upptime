@@ -14,9 +14,7 @@
 | `medrt_web_prd` | https://vn.job.medrthub.com/ | 医師サイト（本番 / VPS） |
 | `medrt_api_prd` | https://api.vn.job.medrthub.com/health | API ヘルスチェック（200 / `OK` を返却） |
 | `medrt_management_prd` | https://admin.vn.job.medrthub.com/ | 管理サイト（本番 / VPS） |
-
-医療機関管理サイト（compose の `institution_management` / port 3003）は本番ドメインが未確定のため、
-`.upptimerc.yml` にコメントとして雛形を残しています。ドメイン確定後にコメントを解除してください。
+| `medrt_institution_management_prd` | https://organization.vn.job.medrthub.com/ | 医療機関管理サイト（本番 / VPS） |
 
 ステージング（AWS ECS/RDS）も同ファイル内にコメントで用意済みです。
 ただし STG は `medrt_cdk` の `monitoring-stack.ts` で CloudWatch + SNS による監視が既に有効なため、
@@ -171,6 +169,29 @@ SMTP / SendGrid / SES などが利用できます。SMTP の例:
 ---
 
 ## 6. 動作確認
+
+### 6-0. ワークフローが登録されているか確認（初回のみ・重要）
+
+```bash
+gh api /repos/ARIA-inc/medrt_upptime/actions/workflows --jq '.total_count'
+```
+
+**9** が返れば正常です。少ない場合、GitHub が初回 push を Actions として処理せず、
+schedule / workflow_dispatch のみのワークフロー（Uptime CI など）が未登録の状態です。
+この状態では `gh workflow run "Uptime CI"` が
+`HTTP 404: workflow uptime.yml not found on the default branch` になり、
+`Setup CI` のログにも `Unable to find workflow 'Graphs CI'` が出ます。
+
+対処: ワークフローファイルに変更を加えて push すると GitHub が認識します。
+
+```bash
+for f in graphs response-time site summary update-template updates uptime; do
+  printf '\n' >> .github/workflows/$f.yml
+done
+git commit -am "Register workflows" && git push
+```
+
+### 6-1. 監視の実行
 
 1. `Actions → Uptime CI → Run workflow` を手動実行
 2. 成功すると `history/*.yml` と `api/**` がコミットされる
