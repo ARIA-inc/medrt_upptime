@@ -77,18 +77,16 @@
     "icon": "https://icons.duckduckgo.com/ip3/vn.job.medrthub.com.ico",
     "slug": "test-down",
     "status": "up",
-    "uptime": "43.10%",
-    "uptimeDay": "43.10%",
-    "uptimeWeek": "43.10%",
-    "uptimeMonth": "43.10%",
-    "uptimeYear": "43.10%",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
     "time": 922,
     "timeDay": 922,
     "timeWeek": 922,
     "timeMonth": 922,
     "timeYear": 922,
-    "dailyMinutesDown": {
-      "2026-08-09": 4
-    }
+    "dailyMinutesDown": {}
   }
 ]
