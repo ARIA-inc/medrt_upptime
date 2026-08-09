@@ -15,7 +15,7 @@ sites:
   - name: medrt_institution_management_prd
     url: https://organization.vn.job.medrthub.com/
   - name: test_down
-    url: https://vn.job.medrthub.com/
+    url: https://vn.job.medrthub.com/__upptime_test_404__
     expectedStatusCodes:
       - 200
 
