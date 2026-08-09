@@ -12,9 +12,8 @@ sites:
       - 200
   - name: medrt_management_prd
     url: https://admin.vn.job.medrthub.com/
-  # 医療機関管理サイト（本番ドメイン確定後にコメント解除）
-  # - name: medrt_institution_management_prd
-  #   url: https://<institution-domain>/
+  - name: medrt_institution_management_prd
+    url: https://organization.vn.job.medrthub.com/
 
   # ---- ステージング（AWS ECS/RDS）: 監視する場合はコメント解除 ----
   # - name: medrt_web_stg
