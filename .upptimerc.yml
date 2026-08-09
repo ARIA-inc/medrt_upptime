@@ -14,10 +14,6 @@ sites:
     url: https://admin.vn.job.medrthub.com/
   - name: medrt_institution_management_prd
     url: https://organization.vn.job.medrthub.com/
-  - name: test_down
-    url: https://vn.job.medrthub.com/
-    expectedStatusCodes:
-      - 200
 
   # ---- ステージング（AWS ECS/RDS）: 監視する場合はコメント解除 ----
   # - name: medrt_web_stg
@@ -43,6 +39,9 @@ status-website:
       href: /
     - title: GitHub
       href: https://github.com/$OWNER/$REPO
+
+# 短時間で復旧したインシデントの Issue を自動削除しない（記録を残す）
+skipDeleteIssues: true
 
 # Upptime also supports notifications, assigning issues, and more
 # See https://upptime.js.org/docs/configuration

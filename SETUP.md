@@ -196,15 +196,40 @@ git commit -am "Register workflows" && git push
 1. `Actions → Uptime CI → Run workflow` を手動実行
 2. 成功すると `history/*.yml` と `api/**` がコミットされる
 3. `Actions → Summary CI` 実行後、README のステータス表と `graphs/` が更新される
-4. Slack 通知のテスト:
-   - `.upptimerc.yml` に存在しない URL を一時的に追加して push → 5分以内に Slack へ 🟥 通知 + Issue 起票
-   - 確認後にその行を削除して push すると 🟩 復旧通知 + Issue 自動クローズ
-   - Webhook 単体の疎通確認だけなら:
-     ```bash
-     curl -X POST -H 'Content-type: application/json' \
-       --data '{"text":"MEDRT Upptime テスト通知"}' \
-       'https://hooks.slack.com/services/XXX/YYY/ZZZ'
-     ```
+### 6-2. Slack 通知のテスト
+
+Webhook 単体の疎通確認だけなら:
+
+```bash
+curl -X POST -H 'Content-type: application/json' \
+  --data '{"text":"MEDRT Upptime テスト通知"}' \
+  'https://hooks.slack.com/services/XXX/YYY/ZZZ'
+```
+
+ダウン→復旧の一連の流れを試す場合、**必ず同じ `name` のまま URL だけを差し替えてください。**
+
+1. `.upptimerc.yml` に失敗するサイトを追加 → push → `Uptime CI` 実行
+   ```yaml
+   - name: test_down
+     url: https://vn.job.medrthub.com/__upptime_test_404__
+     expectedStatusCodes:
+       - 200
+   ```
+   → Slack に 🟥 ＋ Issue 起票
+2. `name` はそのままで `url` を正常なもの（`https://vn.job.medrthub.com/`）に変更 → push → `Uptime CI` 実行
+   → Slack に 🟩 ＋ Issue 自動クローズ
+3. 確認後に `test_down` の項目ごと削除し、`history/test-down.yml`・`api/test-down/`・`graphs/test-down/` も削除
+
+> **サイトの行を削除して復旧を試そうとしても動きません。** 監視対象から外れると Upptime はチェックしなくなり、
+> ダウン→復旧の遷移が発生しないため、Issue は開いたままで 🟩 も送信されません。
+
+> **Issue が消える場合**: Upptime は「起票から15分以内にクローズされ、コメントが1件だけ」の Issue を
+> 一時的な不具合とみなして**自動削除**します。テスト時は「クローズされた Issue」ではなく
+> 「Issue ごと消える」挙動になります。本番の記録を残すため、このリポジトリでは
+> `.upptimerc.yml` に `skipDeleteIssues: true` を設定して自動削除を無効化しています。
+
+> 各ワークフローは同じ concurrency group を共有します。push 直後に `Uptime CI` を dispatch すると
+> `Setup CI` に阻まれて `cancelled` になることがあります。前の実行が終わってから dispatch してください。
 
 ---
 
